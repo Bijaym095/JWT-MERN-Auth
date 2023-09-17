@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import "dotenv/config";
 import cookieParser from "cookie-parser";
+import "dotenv/config";
 
 import authenticateToken from "./middlewares/tokenAuthentication";
 import authRoute from "./routes/authRoute";

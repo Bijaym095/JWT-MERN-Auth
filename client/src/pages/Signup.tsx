@@ -36,10 +36,10 @@ const Signup = () => {
   return (
     <section className="h-screen">
       <Container className="grid place-items-center h-full">
-        <div className="border border-black p-8">
-          <h2 className="mb-4 font-bold text-xl">Signup</h2>
+        <div className="bg-white p-8">
+          <h2 className="mb-4 font-bold text-2xl">Create An Account</h2>
 
-          <form className="space-y-4 mb-6" onSubmit={handleSubmit}>
+          <form className="space-y-6 mb-8" onSubmit={handleSubmit}>
             <FormGroup>
               <label htmlFor="email">Email</label>
               <input
@@ -85,7 +85,7 @@ const Signup = () => {
               />
             </FormGroup>
 
-            <button className="block w-full py-2 border border-black">
+            <button className="block w-full py-3 bg-accent hover:bg-opacity-95 text-white font-medium uppercase tracking-[0.1rem] text-sm">
               {isLoading ? "Loading..." : "Signup"}
             </button>
           </form>

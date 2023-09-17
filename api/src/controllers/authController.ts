@@ -77,7 +77,7 @@ export const login = async (req: Request, res: Response) => {
 
     res.cookie("refreshToken", refreshToken, {
       sameSite: false,
-      maxAge: 60 * 5 * 1000,
+      maxAge: 1000 * 60 * 60 * 24* 7,
       httpOnly: true,
       secure: false,
     });
@@ -104,8 +104,6 @@ export const logout = async (req: Request, res: Response) => {
 // @desc Refresh accessToken on expiration
 // @route GET /auth/refresh
 // @access Public - because token has expired
-
-//! FIX : Response with message of token expired
 
 export const refreshToken = async (req: Request, res: Response) => {
   const cookie: string = req.cookies.refreshToken;

@@ -34,10 +34,10 @@ const Login = () => {
   return (
     <section className=" h-screen">
       <Container className="p-4 flex justify-center items-center h-full">
-        <div className="border border-black p-8">
-          <h2 className="font-bold text-xl mb-6">Login</h2>
+        <div className=" p-8 bg-white">
+          <h2 className="font-bold capitalize text-2xl mb-6 ">Login</h2>
 
-          <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+          <form onSubmit={handleSubmit} className="space-y-6 mb-8">
             <FormGroup>
               <label htmlFor="email">Email</label>
               <input
@@ -67,11 +67,7 @@ const Login = () => {
               />
             </FormGroup>
 
-            <button
-              className={`block border border-black w-full py-2 ${
-                isLoading ? "cursor-progress" : "cursor-pointer"
-              }`}
-            >
+            <button className="block w-full py-3 bg-accent hover:bg-opacity-95 text-white font-medium uppercase tracking-[0.1rem] text-sm">
               {isLoading ? "Loading..." : "Login"}
             </button>
           </form>

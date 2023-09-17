@@ -7,7 +7,16 @@ export default {
     container: {
       center: true,
     },
-    extend: {},
+    fontFamily: {
+      body: ["Roboto", "sans-serif"],
+    },
+    extend: {
+      colors: {
+        primary: "#F3F6FF",
+        secondary: "#4477CE",
+        accent: "#3B0B75",
+      },
+    },
   },
   plugins: [forms({ strategy: "class" })],
 };

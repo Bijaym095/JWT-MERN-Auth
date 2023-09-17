@@ -1,44 +1,46 @@
 import axios from "axios";
 
-const accessToken: string | null = sessionStorage.getItem("token");
-
 axios.defaults.baseURL = "http://localhost:5000/api";
-axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-let refresh = false;
+axios.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem("token");
+
+    // if the token exists, then send it with the every axios request
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 axios.interceptors.response.use(
   (resp) => resp,
   async (error) => {
+    const originalRequest = error.config;
+
     // If axios response returns the status of  403 i.e Forbidden then send post request to refresh token
-    if (error.response.status === 403 && !refresh) {
-      refresh = true;
+    if (error.response.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
-      const refreshResponse = await axios.get("/auth/refresh", {
-        withCredentials: true,
-      });
+      try {
+        const { data } = await axios.get("/auth/refresh", {
+          withCredentials: true,
+        });
 
-      // If the post request to refreshtoken is success then update the access token in session storage
-      if (refreshResponse.status === 200) {
-        const newAccessToken = refreshResponse.data.token;
+        sessionStorage.setItem("token", data.token);
+        originalRequest.headers.Authorization = `Bearer ${data.token}`;
 
-        // Update the access token in session storage and Axios headers
-        sessionStorage.setItem("token", newAccessToken);
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${newAccessToken}`;
+        return axios(originalRequest);
+      } catch (refreshTokenAPIError) {
+        sessionStorage.removeItem("token");
+        window.location.href = "/login";
 
-        return axios(error.config);
+        return Promise.reject(refreshTokenAPIError);
       }
     }
-
-    // If axios returns the response status of 401 i.e No acess token then logout the user
-    if (error.response.status === 401) {
-      sessionStorage.removeItem("token");
-      window.location.href = "/login";
-    }
-
-    refresh = false;
 
     return Promise.reject(error);
   }

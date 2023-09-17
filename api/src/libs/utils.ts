@@ -28,12 +28,12 @@ export const hashPassword = async (password: string): Promise<string> => {
 
 export const generateToken = (payload: JWTPayload): string => {
   return jwt.sign(payload, process.env.JWT_SECRET_KEY!, {
-    expiresIn: 60,
+    expiresIn: "15m",
   });
 };
 
 export const generateRefreshToken = (payload: JWTPayload): string => {
   return jwt.sign(payload, process.env.REFRESH_SECRET_KEY!, {
-    expiresIn: 60 * 5,
+    expiresIn: "7d",
   });
 };

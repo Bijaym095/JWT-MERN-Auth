@@ -11,8 +11,6 @@ const useLogout = () => {
   });
   const { dispatch } = useAuthContext();
 
-  // TODO Fix the logout ! Can't logout since the fetching of single user details
-
   const logout = async () => {
     try {
       await mutateAsync();

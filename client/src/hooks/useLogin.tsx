@@ -21,7 +21,7 @@ const useLogin = () => {
         }
       );
 
-      axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${data["token"]}`;
 
       return data;
     },
